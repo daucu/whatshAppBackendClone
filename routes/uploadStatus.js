@@ -18,7 +18,10 @@ router.post("/", upload.single("status"), async (req, res) => {
   }
   // code to update the status in userSchema status field
   user.status = url + "/" + req.file.filename;
-  const updateStatus = await user.updateOne({ status: user.status });
+  const updateStatus = await user.updateOne({
+    status: user.status,
+    // remove status after 1 minute automatically
+  });
   if (!updateStatus) {
     return res.status(400).json({
       message: "Status not updated",
