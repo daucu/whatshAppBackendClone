@@ -22,7 +22,6 @@ router.put("/:id", async (req, res) => {
         name,
         email,
         phonenumber,
-        status,
       },
       { new: true }
     );
