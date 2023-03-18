@@ -15,7 +15,7 @@ const userSchema = new schema({
     required: true,
   },
   phonenumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   status: {

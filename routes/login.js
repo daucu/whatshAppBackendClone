@@ -9,7 +9,9 @@ router.post("/", async (req, res) => {
   try {
     const { email, phonenumber, password } = req.body;
     if (!email || !phonenumber || !password) {
-      return res.json({ message: "Please fill all the fields" });
+      return res.status(400).json({
+        message: "Please fill all the fields",
+      });
     }
     const checkUser = await userSchema.findOne({ email: email });
     if (!checkUser) {
@@ -50,8 +52,8 @@ router.post("/", async (req, res) => {
       secure: true,
     });
     res.setHeader("x-auth-token", token);
-    res.json({
-      message: "User Logged In Successfully",
+    res.status(200).json({
+      message: "Login Success",
       token: token,
       user: checkUser,
     });

@@ -20,22 +20,28 @@ router.post("/", async (req, res) => {
     !req.body.password ||
     !req.body.phonenumber
   ) {
-    return res.json({ message: "Please fill all the fields" });
+    return res.status(400).json({
+      message: "Please fill all the fields",
+    });
   }
 
   //   code to check the length of the phone number
-  const checkNumber = JSON.stringify(req.body.phonenumber).length;
-  if (checkNumber !== 10) {
-    return res.json({ message: "Phone number should be of 10 digits" });
-  }
+  // const checkNumber = JSON.stringify(req.body.phonenumber).length;
+  // if (checkNumber !== 10) {
+  //   return res.json({ message: "Phone number should be of 10 digits" });
+  // }
 
   //   if phone number already exists
   if (await user.findOne({ phonenumber: req.body.phonenumber })) {
-    return res.json({ message: "Phone number already exists" });
+    return res.status(400).json({
+      message: "Phone number already exists",
+    });
   }
   //    if email already exists
   if (await user.findOne({ email: req.body.email })) {
-    return res.json({ message: "Email already exists" });
+    return res.status(400).json({
+      message: "Email already exists",
+    });
   }
 
   const newUser = new user({
