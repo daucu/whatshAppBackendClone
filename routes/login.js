@@ -13,17 +13,23 @@ router.post("/", async (req, res) => {
     }
     const checkUser = await userSchema.findOne({ email: email });
     if (!checkUser) {
-      return res.json({ message: "User not found" });
+      return res.status(400).json({
+        message: "User not found",
+      });
     }
 
     // check phone number
     if (checkUser.phonenumber !== phonenumber) {
-      return res.json({ message: "Invalid PhoneNumber" });
+      return res.status(400).json({
+        message: "Invalid Phone Number",
+      });
     }
 
     const hashPassword = await bcrypt.compare(password, checkUser.password);
     if (!hashPassword) {
-      return res.json({ message: "Invalid Password" });
+      return res.status(400).json({
+        message: "Invalid Password",
+      });
     }
 
     const token = jwt.sign(
